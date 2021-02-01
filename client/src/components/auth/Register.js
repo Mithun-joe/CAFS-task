@@ -1,10 +1,11 @@
 import React, {Fragment , useState} from 'react';
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {setAlert} from "../../actions/alert";
+import {register} from "../../actions/auth";
 import PropTypes from 'prop-types';
 
-const Register = ({setAlert}) => {
+const Register = ({setAlert,register,isAuthenticated}) => {
 
     const [ formData , setFormData] = useState({
         name:'',
@@ -22,9 +23,13 @@ const Register = ({setAlert}) => {
         if(password !== password2){
             setAlert('passwords do not match', 'danger')
         }else{
-            console.log('Success')
+            register({name,mobileNo,password})
         }
     };
+
+    if(isAuthenticated){
+        return <Redirect to='/dashboard' />
+    }
 
     return(
         <Fragment>
@@ -33,7 +38,7 @@ const Register = ({setAlert}) => {
                 <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
                 <form className="form" onSubmit={e => onSubmit(e)} action="create-profile.html">
                     <div className="form-group">
-                        <input type="text" placeholder="Name" name="name" value={name} onChange={e=>onChange(e)} required/>
+                        <input type="text" placeholder="Name" name="name" value={name} onChange={e=>onChange(e)} />
                     </div>
                     <div className="form-group">
                         <input type="text" placeholder="Mobile Number" value={mobileNo} onChange={e=>onChange(e)} name="mobileNo"/>
@@ -69,7 +74,14 @@ const Register = ({setAlert}) => {
 };
 
 Register.propTypes = {
-    setAlert: PropTypes.func.isRequired
+    setAlert: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
 };
 
-export default  connect(null,{setAlert})(Register);
+
+const mapStateToProps = state => ({
+    isAuthenticated : state.auth.isAuthenticated
+});
+
+export default  connect(mapStateToProps,{setAlert,register})(Register);
