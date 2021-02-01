@@ -151,8 +151,9 @@ img {
 
 .alert {
   padding: 0.8rem;
-  margin: 1rem 0;
-  opacity: 0.9;
+  margin: 1.2rem 0;
+  border-radius: 20px;
+  opacity: 0.8;
   background: var(--light-color);
   color: #333;
 }
@@ -492,7 +493,7 @@ button {
 /* Mobile Styles */
 @media (max-width: 700px) {
   .container {
-      margin-top: 8rem;
+      margin-top:5rem;
   }
 
   .hide-sm {

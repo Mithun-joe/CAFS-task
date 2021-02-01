@@ -8,7 +8,7 @@ const Landing = () => {
                 <div className="landing-inner">
                     <h1 className="x-large">CAFS CRUD Application</h1>
                     <p className="lead">
-                        Create a developer profile/portfolio
+                        Create a developer profile and portfolio
                     </p>
                     <div className="buttons">
                         <Link to="/register" className="btn btn-primary">Sign Up</Link>
