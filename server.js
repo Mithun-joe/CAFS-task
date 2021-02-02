@@ -1,8 +1,20 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
+const multer = require('multer');
 
 const app = express();
+
+// const storage = multer.diskStorage({
+//     destination: function(req, file, cb) {
+//         cb(null, 'uploads/');
+//     },
+//
+//     // By default, multer removes file extensions so let's add them back
+//     filename: function(req, file, cb) {
+//         cb(null,
+//     }
+// });
 
 //connect database
 connectDB();

@@ -12,13 +12,24 @@ const Login = ({login,isAuthenticated}) => {
         password:'',
     });
 
+    const [demoLoginData] = React.useState({
+        mobileNoDemo: '0000000',
+        passwordDemo: '1234'
+    });
+
     const {mobileNo,password} = formData;
+    const {mobileNoDemo,passwordDemo} = demoLoginData;
 
     const onChange = (e) => setFormData({...formData,[e.target.name]:e.target.value});
 
     const onSubmit = (e) =>{
         e.preventDefault();
         login(mobileNo,password)
+    };
+
+    const onClick = async e => {
+        e.preventDefault();
+        login(mobileNoDemo,passwordDemo)
     };
 
     if(isAuthenticated){
@@ -45,6 +56,7 @@ const Login = ({login,isAuthenticated}) => {
                         />
                     </div>
                     <input type="submit" className="btn btn-primary" value="Login"/>
+                    <input type="submit" onClick={e=>onClick(e)} className="btn btn-primary" value="Demo login"/>
                 </form>
                 <p className="my-1">
                     Dont have a account <Link to="/register">Sign up</Link>

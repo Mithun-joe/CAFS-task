@@ -7,7 +7,7 @@ import {Link, withRouter} from 'react-router-dom'
 const CreateProfile = ({createProfile, history}) => {
     const [formData, setformData] = useState({
         mobileNo:'',
-        gender:'',
+        gender:'male',
         role: '',
         skills: '',
         email: '',
@@ -22,12 +22,18 @@ const CreateProfile = ({createProfile, history}) => {
         role,
         skills,
         email,
-        resume,
         dob
     } = formData;
 
     const onChange = (e) => setformData({...formData,[e.target.name]:e.target.value});
 
+    const onFileChange = (e) => {
+        setformData({...formData, resume: '0'});
+    };
+
+    const onSelect = (e) =>{
+        setformData({...formData,gender: e.target.value});
+    };
     const onSubmit = (e) => {
         e.preventDefault();
         createProfile(formData,history)
@@ -61,11 +67,25 @@ const CreateProfile = ({createProfile, history}) => {
                     >Could be your own company or one you work for</small
                     >
                 </div>
-                <div className="form-group">
-                    <input type="text" placeholder="Gender" name="gender" value={gender} onChange={e=>onChange(e)}/>
-                    <small className="form-text"
-                    >Could be your own or a company website</small
-                    >
+                <div className="form-group" >
+                    <div className='radio'>
+                        <label>
+                            <input type='radio' value='male' onChange={e=>onSelect(e)} checked={gender === 'male'}/>
+                            {' '} Male
+                        </label>
+                    </div>
+                    <div className='radio'>
+                        <label>
+                            <input type='radio' value='female' onChange={e=>onSelect(e)} checked={gender === 'female'}/>
+                            {' '} female
+                        </label>
+                    </div>
+                    <div className='radio'>
+                        <label>
+                            <input type='radio' value='others' onChange={e=>onSelect(e)} checked={gender === 'others'}/>
+                            {''} others
+                        </label>
+                    </div>
                 </div>
                 <div className="form-group">
                     <input type="text" placeholder="* Skills" name="skills" value={skills} onChange={e=>onChange(e)}/>
@@ -87,12 +107,12 @@ const CreateProfile = ({createProfile, history}) => {
                     >
                 </div>
                 <div className="form-group">
-                    <input type='text' placeholder="resume" name="resume" value={resume} onChange={e=>onChange(e)}></input>
+                    <input type='file' placeholder="resume" name="file" onChange={e=>onFileChange(e)}></input>
                     <small className="form-text">Tell us a little about yourself</small>
                 </div>
 
                 <div className="form-group">
-                    <input type='text' placeholder="Date of birth" name="dob" value={dob} onChange={e=>onChange(e)}></input>
+                    <input type='date' placeholder="Date of birth" name="dob" value={dob} onChange={e=>onChange(e)}></input>
                     <small className="form-text">please enter your date of birth</small>
                 </div>
 
