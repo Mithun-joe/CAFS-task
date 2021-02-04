@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import {deleteAccount, getCurrentProfile} from "../../actions/profile";
 import Spinner from "../layout/Spinner";
 import DashboardActions from "./DashboardAction";
+import Model from '../model/Model'
 
 const Dashboard = ({getCurrentProfile,deleteAccount,auth:{user},profile:{profile,loading}}) =>{
     useEffect(()=>{
@@ -21,7 +22,8 @@ const Dashboard = ({getCurrentProfile,deleteAccount,auth:{user},profile:{profile
             </p>
             {profile !== null
                 ?  <Fragment>
-                    <DashboardActions/>
+                    {/*<DashboardActions/>*/}
+                    <Model/>
                     <div className='my-2'>
                         <button className='btn btn-danger' onClick={()=>deleteAccount()}>
                             <i className='fas fa-user-minus'></i> Delete My Account
@@ -29,10 +31,7 @@ const Dashboard = ({getCurrentProfile,deleteAccount,auth:{user},profile:{profile
                     </div>
                 </Fragment>
                 : <Fragment>
-                    <p>You have not yet setup a profile, please add some info</p>
-                    <Link to='/create-profile' className='btn btn-primary my-1'>
-                        Create Profile
-                    </Link>
+                    <Model />
                 </Fragment>
             }
             </div>

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { createProfile, getCurrentProfile } from "../../actions/profile";
 import { Link, withRouter } from 'react-router-dom'
 
-const EditProfile = ({ createProfile, getCurrentProfile, profile: { profile, loading }, history }) => {
+const EditProfile = ({close, createProfile, getCurrentProfile, profile: { profile, loading }, history }) => {
     const [formData, setformData] = useState({
         mobileNo: '',
         gender: 'male',
@@ -15,7 +15,7 @@ const EditProfile = ({ createProfile, getCurrentProfile, profile: { profile, loa
         dob: ''
     });
 
-
+    const [selectedFile, setSelectedFile] = useState(null)
 
     const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
@@ -46,8 +46,8 @@ const EditProfile = ({ createProfile, getCurrentProfile, profile: { profile, loa
     const onChange = (e) => setformData({ ...formData, [e.target.name]: e.target.value });
 
     const onFileChange = (e) => {
-        setformData({ ...formData, resume: e.target.files[0] });
-        console.log(formData)
+        setSelectedFile(e.target.files[0])
+        console.log(selectedFile)
     };
 
     const onSelect = (e) => {
@@ -64,9 +64,6 @@ const EditProfile = ({ createProfile, getCurrentProfile, profile: { profile, loa
     return (
         <Fragment>
             <div className='container'>
-                <h1 className="large text-primary">
-                    Create Your Profile
-            </h1>
                 <p className="lead">
                     <i className="fas fa-user"></i> Let's get some information to make your
                 profile stand out
@@ -142,7 +139,7 @@ const EditProfile = ({ createProfile, getCurrentProfile, profile: { profile, loa
 
 
 
-                    <input type="submit" className="btn btn-primary my-1" />
+                    <input onClick={close} type="submit" className="btn btn-primary my-1" />
                     <Link className="btn btn-light my-1" to="/dashboard">Go Back</Link>
                 </form>
             </div>

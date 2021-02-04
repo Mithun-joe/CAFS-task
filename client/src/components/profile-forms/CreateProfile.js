@@ -4,17 +4,17 @@ import { connect } from "react-redux";
 import { createProfile } from "../../actions/profile";
 import { Link, withRouter } from 'react-router-dom'
 
-const CreateProfile = ({ createProfile, history }) => {
+const CreateProfile = ({close, createProfile, history }) => {
     const [formData, setformData] = useState({
         mobileNo: '',
         gender: 'male',
         role: '',
         skills: '',
         email: '',
-        resume: '',
         dob: ''
     });
 
+    const [selectedFile, setSelectedFile] = useState(null)
 
     const {
         mobileNo,
@@ -28,7 +28,7 @@ const CreateProfile = ({ createProfile, history }) => {
     const onChange = (e) => setformData({ ...formData, [e.target.name]: e.target.value });
 
     const onFileChange = (e) => {
-        setformData({ ...formData, resume: e.target.files[0] });
+        setSelectedFile(e.target.files[0])
     };
 
     const onSelect = (e) => {
@@ -42,9 +42,6 @@ const CreateProfile = ({ createProfile, history }) => {
     return (
         <Fragment>
             <div className='container'>
-                <h1 className="large text-primary">
-                    Create Your Profile
-            </h1>
                 <p className="lead">
                     <i className="fas fa-user"></i> Let's get some information to make your
                 profile stand out
@@ -117,7 +114,7 @@ const CreateProfile = ({ createProfile, history }) => {
                     </div>
 
 
-                    <input type="submit" className="btn btn-primary my-1" />
+                    <input onClick={close} type="submit" className="btn btn-primary my-1" />
                     <Link className="btn btn-light my-1" to="/dashboard">Go Back</Link>
                 </form>
             </div>

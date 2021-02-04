@@ -40,7 +40,7 @@ img {
   margin: auto;
   overflow: hidden;
   padding: 0 2rem;
-  margin-top: 3.5rem;
+  margin-top: 2rem;
   margin-bottom: 3rem;
 }
 
@@ -292,7 +292,8 @@ button {
 
 .table th,
 .table td {
-  padding: 1rem;
+  padding: 0.9rem;
+  padding: 0.9rem;
   text-align: left;
 }
 
@@ -493,7 +494,7 @@ button {
 /* Mobile Styles */
 @media (max-width: 700px) {
   .container {
-      margin-top:5rem;
+      margin-top:0rem;
   }
 
   .hide-sm {
