@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { createProfile, getCurrentProfile } from "../../actions/profile";
 import { Link, withRouter } from 'react-router-dom'
 
-const EditProfile = ({close, createProfile, getCurrentProfile, profile: { profile, loading }, history }) => {
+const EditProfile = ({ close, createProfile, getCurrentProfile, profile: { profile, loading }, history }) => {
     const [formData, setformData] = useState({
         mobileNo: '',
         gender: 'male',
@@ -64,6 +64,9 @@ const EditProfile = ({close, createProfile, getCurrentProfile, profile: { profil
     return (
         <Fragment>
             <div className='container'>
+                <h1 className="large text-primary">
+                    Edit Your Profile
+                        </h1>
                 <p className="lead">
                     <i className="fas fa-user"></i> Let's get some information to make your
                 profile stand out
