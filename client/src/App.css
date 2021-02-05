@@ -1,6 +1,6 @@
 /* Global Styles */
 :root {
-  --primary-color: #e11bee;
+  --primary-color: #0066ee;
   --dark-color: #343a40;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
@@ -310,9 +310,9 @@ button {
   position: fixed;
   z-index: 1;
   width: 100%;
-  background: #5941A3;
+  background: rgba(0, 67, 171, 0.96);
   top: 0;
-  border-bottom: solid 1px var(--primary-color);
+  /*border-bottom: solid 1px var(--primary-color);*/
 }
 
 .navbar ul {
@@ -320,7 +320,7 @@ button {
 }
 
 .navbar a {
-  color: #fff;
+  color: rgb(249, 239, 255);
   padding: 0.45rem;
   margin: 0 0.25rem;
 }

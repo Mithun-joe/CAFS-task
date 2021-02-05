@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { logout } from "../../actions/auth";
 
 
-const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+const Navbar = ({ auth: { isAuthenticated, loading }, logout ,history }) => {
     const authLinks = (
         <ul>
             <li><Link to="/dashboard" style={{ textDecoration: "none" }}>
@@ -31,9 +31,9 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         </ul>
     );
     return (
-        <nav className="navbar nav">
+        <nav className='navbar'>
             <h1>
-                <Link to='/' className='small' style={{ textDecoration: "none" }}>Crud App</Link>
+                <Link to='/' className='small' style={{ textDecoration: "none" }}>CRUD APP</Link>
             </h1>
             {!loading && (<Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>)}
         </nav>
@@ -47,6 +47,6 @@ Navbar.propTypes = {
 
 const mapStateToProps = state => ({
     auth: state.auth
-})
+});
 
 export default connect(mapStateToProps, { logout })(Navbar)
