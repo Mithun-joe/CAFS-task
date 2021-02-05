@@ -33,7 +33,7 @@ const Navbar = ({auth:{isAuthenticated,loading},logout}) => {
     return (
         <nav className="navbar ">
             <h1>
-                <Link to='/' className='small' style={{textDecoration:"none"}}>CAFS InfoTech</Link>
+                <Link to='/' className='small' style={{textDecoration:"none"}}>NOKIA</Link>
             </h1>
             {!loading && (<Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>)}
         </nav>

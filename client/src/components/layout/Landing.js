@@ -1,19 +1,19 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
-import {connect} from "react-redux";
+import { Link } from 'react-router-dom'
+import { connect } from "react-redux";
 import PropTypes from 'prop-types';
-import {Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
-const Landing = ({isAuthenticated}) => {
-    if(isAuthenticated){
-        return <Redirect to='/dashboard'/>
+const Landing = ({ isAuthenticated }) => {
+    if (isAuthenticated) {
+        return <Redirect to='/dashboard' />
     }
 
-    return(
+    return (
         <section className="landing">
             <div className="dark-overlay">
                 <div className="landing-inner">
-                    <h1 className="x-large">CAFS CRUD Application</h1>
+                    <h1 className="x-large">NOKIA CRUD Application</h1>
                     <p className="lead">
                         Create a developer profile and portfolio
                     </p>
@@ -27,12 +27,12 @@ const Landing = ({isAuthenticated}) => {
     )
 };
 
-Landing.propTypes= {
-    isAuthenticated:PropTypes.bool.isRequired
+Landing.propTypes = {
+    isAuthenticated: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
-    isAuthenticated:state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated
 });
 
 
