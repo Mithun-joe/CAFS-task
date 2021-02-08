@@ -30,42 +30,42 @@ router.get('/', auth, async (req, res) => {
 router.post('/', [
     check('mobileNo', 'Mobile number is required').not().isEmpty(),
     check('password', 'password is required').exists()
-], async (req, res) => {
+], (req, res) => {
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() })
     }
 
-    const { mobileNo, password } = req.body;
+    const data = req.body
 
-    try {
-        let user = await User.findOne({ mobileNo })
-        if (!user) {
-            return res.status(400).json({ errors: [{ msg: 'Invalid credentials' }] })
-        }
 
-        const isMatch = await bcrypt.compare(password, user.password);
+    User.findOne({ mobileNo: data.mobileNo })
+        .then(user => {
 
-        if (!isMatch) {
-            return res.status(400).json({ errors: [{ msg: 'Invalid credentials' }] })
-        }
-
-        const payload = {
-            user: {
-                id: user.id,
+            if (!user) {
+                return res.status(401).json({ errors: [{ msg: 'invalid Credentials' }] })
             }
-        }
 
-        jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 36000 }, (err, token) => {
-            if (err) throw (err);
-            res.json({ token })
-        });
+            bcrypt
+                .compare(data.password, user.password)
+                .then(isMatch => {
+                    if (!isMatch) {
+                        return res.status(400).json({ errors: [{ msg: 'invalid credentials' }] })
+                    }
+                    const token = jwt.sign({ _id: user._id }, config.get('jwtSecret'))
+                    return res.status(201).json({ token })
+                })
+                .catch(err => {
+                    console.log(err)
+                    return res.status(500).send('cant access database')
+                })
 
-    } catch (err) {
-        console.log(err);
-        res.status(500).send('server error')
-    }
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(500).send('cant access database')
+        })
 })
 
 

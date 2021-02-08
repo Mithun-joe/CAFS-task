@@ -16,56 +16,49 @@ router.post('/', [
     check('name', 'Name is required').not().isEmpty(),
     check('mobileNo', 'Mobile number is required').not().isEmpty(),
     check('password', 'please enter a password with 4 or more characters').isLength({ min: 4 })
-], async (req, res) => {
+], (req, res) => {
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() })
     }
 
-    const { name, mobileNo, password } = req.body;
 
-    try {
-        let user = await User.findOne({ name })
-        if (user) {
-            return res.status(400).json({ errors: [{ msg: 'User already exists' }] })
-        }
+    const data = req.body
 
-        const avatar = gravatar.url(name, {
-            s: '200',
-            r: 'pg',
-            d: 'mm'
-        })
+    const { name } = data
 
-
-        user = new User({
-            name,
-            mobileNo,
-            avatar,
-            password
-        })
-
-        const salt = await bcrypt.genSalt(10);
-
-        user.password = await bcrypt.hash(password, salt);
-
-        await user.save()
-
-        const payload = {
-            user: {
-                id: user.id,
+    User.findOne({ name })
+        .then(user => {
+            if (user) {
+                return res.status(401).json({ errors: [{ msg: 'user already exists' }] })
             }
-        }
 
-        jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 36000 }, (err, token) => {
-            if (err) throw (err);
-            res.json({ token })
-        });
-
-    } catch (err) {
-        console.log(err);
-        res.status(500).send('server error')
-    }
+            bcrypt
+                .genSalt(10)
+                .then(salt => {
+                    return bcrypt.hash(data.password, salt)
+                })
+                .then(hash => {
+                    data.password = hash
+                    const user = new User(data)
+                    const token = jwt.sign({ _id: user._id }, config.get('jwtSecret'))
+                    user.save()
+                    return token
+                })
+                .then((token) => {
+                    delete data.password;
+                    return res.status(201).json({ token })
+                })
+                .catch(err => {
+                    console.log(err)
+                    return res.status(500).send('cant access database')
+                })
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(500).send('cant access database')
+        })
 })
 
 
